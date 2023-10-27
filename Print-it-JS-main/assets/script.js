@@ -16,63 +16,45 @@ const slides = [
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
-	const nombreSlides = slides.length
- 	console.log(nombreSlides);
+const banner = document.getElementById("banner");
+const bannerImg = document.querySelector(".banner-img");
+const tagLine = document.querySelector("p");
+const leftArrow = document.querySelector(".arrow_left");
+const rightArrow = document.querySelector(".arrow_right");
+let currentSlide = 0;
 
- 	let arrow_left = document.querySelector (".arrow_left");
-arrow_left.addEventListener("click", () => {
-		console.log("page précedente");
-	})
 
-let arrow_right = document.querySelector (".arrow_right");	
-	arrow_right.addEventListener("click", () => {
-   		console.log("page suivante");
-})
- 
+const dotsContainer = document.querySelector(".dots");
+const dots = [];
 
-let diaporama=1
-function change(n) {
-	(diaporama = n);
-  }
-let dots = document.getElementsByClassName("dot");
+slides.forEach((slide, index) => {
+    const dot = document.createElement("span");
+    dot.classList.add("dot");
+    dot.addEventListener("click", () => showSlide(index));
+    dotsContainer.appendChild(dot);
+    dots.push(dot); 
+});
 
-	for(i=0 ;i<dots.length;i++){
-	console.log(dots[0])
-// dots[i].className = dots[i].className.replace(" dot_selected", "");
-// dots[diaporama-1].className += " dot_selected";
+function showSlide(slideIndex) {
+	const slide = slides[slideIndex];
+	bannerImg.src = `./assets/images/slideshow/${slide.image}`;
+	tagLine.innerHTML = slide.tagLine;	
+	dots.forEach((dot, index) => {
+		if (index === slideIndex) {
+			dot.classList.add("dot_selected");
+		} else {
+			dot.classList.remove("dot_selected");
+		}
+	});
 }
-
-
-	
-
-	
-	
-
-
-	
-
-/*let slideIndex = 1;
-showSlides(slideIndex);
-
-function plusSlides(n) {
-	showSlides (slideIndex +=n)
+function nextSlide() {
+	currentSlide = (currentSlide + 1) % slides.length;
+	showSlide(currentSlide);
 }
-function currentSlide(n) {
-	showSlides (slideIndex = n)
+function prevSlide() {
+	currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+	showSlide(currentSlide);
 }
+leftArrow.addEventListener("click", prevSlide);
+rightArrow.addEventListener("click", nextSlide);
 
-function showSlides(n){
-	let i;
-	let slides = document.getElementsByClassName(".banner-img");
-	let dots = document.querySelectorAll(".dots");
-
-if(n > slides.length) {slideIndex=1}
-if (n < 1) {slideIndex= slides.length}
-}
-
-for(let i= 0; i < dots.length; i++) {
-	dots[i].classList.remove("active");
-}
-slides[slideIndex -1].style.display ="block";
-
-dots[slideIndex -1].classList.add("active");*/
