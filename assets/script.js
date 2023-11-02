@@ -33,6 +33,9 @@ slides.forEach((slide, index) => {
     dot.addEventListener("click", () => showSlide(index));
     dotsContainer.appendChild(dot);
     dots.push(dot); 
+	if (index===0){
+		dot.classList.add("dot_selected");
+	}
 });
 
 function showSlide(slideIndex) {
